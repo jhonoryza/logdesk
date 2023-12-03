@@ -2,54 +2,64 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Electron</title>
+    <title>Logdesk</title>
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'"
+      content="default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; style-src-elem 'self' 'unsafe-inline'; script-src-elem 'self' https://cdn.jsdelivr.net"
     />
 
-    <link href="./style.css" type="text/css" rel="stylesheet" />
+    <link href="/tailwind.css" type="text/css" rel="stylesheet" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   </head>
 
   <body>
-    <div class="container">
-      <ul class="versions">
-        <li class="electron-version"></li>
-        <li class="chrome-version"></li>
-        <li class="node-version"></li>
-        <li class="v8-version"></li>
-      </ul>
+    <!-- navigation -->
+    <nav class="grid grid-cols-2 justify-between border border-slate-300 shadow py-2">
+      <!-- logo -->
+      <h1 class="font-bold text-slate-700">Logdesk</h1>
 
-      <img class="hero-logo" src="./icons.svg" />
-      <h2 class="hero-text">You've successfully created an Electron project</h2>
-      <p class="hero-tagline">Please try pressing <code>F12</code> to open the devTool</p>
-      <p class="hero-tagline">This is the simplest starter for Electron without any build tools</p>
-      <p class="hero-tagline">
-        You can check out the links to learn more about Electron build tools
-      </p>
-
-      <div class="links">
-        <div class="link-item">
-          <a target="_blank" href="https://electron-vite.org">electron-vite</a>
-        </div>
-        <div class="link-item link-dot">•</div>
-        <div class="link-item">
-          <a
-            target="_blank"
-            href="https://github.com/alex8088/quick-start/tree/master/packages/create-electron"
+      <!-- toggle switch always on top -->
+      <div class="flex items-center justify-end bg-white">
+        <div class="flex items-center" x-data="{ on: false }">
+          <button
+            type="button"
+            class="bg-gray-200 relative inline-flex h-4 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+            role="switch"
+            aria-checked="false"
+            x-ref="switch"
+            x-state:on="Enabled"
+            x-state:off="Not Enabled"
+            :class="{ 'bg-indigo-600': on, 'bg-gray-200': !(on) }"
+            aria-labelledby="annual-billing-label"
+            :aria-checked="on.toString()"
+            @click="on = !on; window.electronAPI.toggleTop(on);"
           >
-            create-electron
-          </a>
+            <span
+              aria-hidden="true"
+              class="translate-x-0 pointer-events-none inline-block h-3 w-3 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+              x-state:on="Enabled"
+              x-state:off="Not Enabled"
+              :class="{ 'translate-x-5': on, 'translate-x-0': !(on) }"
+            ></span>
+          </button>
+          <span
+            class="ml-3 text-sm"
+            id="annual-billing-label"
+            @click="on = !on; $refs.switch.focus(); window.electronAPI.toggleTop(on);"
+          >
+            <span class="font-medium text-slate-700">Always On Top</span>
+          </span>
         </div>
       </div>
+      <!-- end toggle -->
+    </nav>
+    <!-- end navigation -->
 
-      <p class="hero-tagline">More templates:</p>
-      <p class="hero-tagline line-spacing">
-        <code>vanilla</code>, <code>vanilla-ts</code>, <code>vue</code>, <code>vue-ts</code>,
-        <code>react</code>, <code>react-ts</code>, <code>svelte</code>, <code>svelte-ts</code>
-      </p>
+    <div class="container mx-auto border">
+      <div id="response"></div>
     </div>
-    <script src="./renderer.js"></script>
+
+    <script src="/renderer.js"></script>
   </body>
 </html>

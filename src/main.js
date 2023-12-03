@@ -1,11 +1,40 @@
 // Modules to control application life and create native browser window
-const { app, shell, BrowserWindow } = require('electron')
+const { app, shell, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const { electronApp, optimizer } = require('@electron-toolkit/utils')
 
+let mainWindow
+
+// start express js logic
+const express = require('express')
+const bodyParser = require('body-parser')
+
+const expressApp = express()
+const port = 3000
+
+expressApp.use(bodyParser.json())
+expressApp.use(express.static(__dirname + '/public'))
+
+expressApp.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'))
+})
+
+expressApp.post('/api/echo', (req, res) => {
+  const receivedData = req.body
+  console.log(receivedData)
+  mainWindow.webContents.send('echo', { data: receivedData.payloads })
+
+  res.json({ message: 'OK' })
+})
+
+expressApp.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
+// end express js logic
+
 function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     show: false,
@@ -31,7 +60,9 @@ function createWindow() {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index.html'))
+  // mainWindow.loadFile(path.join(__dirname, 'index.html'))
+  mainWindow.loadURL('http://localhost:3000')
+  mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -49,6 +80,9 @@ app.whenReady().then(() => {
   })
 
   createWindow()
+  ipcMain.on('toggle:top', function (event, value) {
+    mainWindow.setAlwaysOnTop(value)
+  })
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
@@ -61,10 +95,9 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  // if (process.platform !== 'darwin') {
+  app.quit()
+  // }
 })
 
-// In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.

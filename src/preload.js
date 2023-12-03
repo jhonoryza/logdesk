@@ -1,22 +1,56 @@
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
-const { contextBridge } = require('electron')
-const { electronAPI } = require('@electron-toolkit/preload')
+const { contextBridge, ipcRenderer } = require('electron')
 
-// Custom APIs for renderer
-const api = {}
-
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
-if (process.contextIsolated) {
-  try {
-    contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api)
-  } catch (error) {
-    console.error(error)
+contextBridge.exposeInMainWorld('electronAPI', {
+  toggleTop: function (on) {
+    ipcRenderer.send('toggle:top', on)
   }
-} else {
-  window.electron = electronAPI
-  window.api = api
-}
+})
+
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('response').innerHTML = ''
+  ipcRenderer.on('echo', (event, message) => {
+    let oldContent = document.getElementById('response').innerHTML
+
+    const now = new Date().toLocaleString('en-US', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    })
+
+    if (Array.isArray(message.data)) {
+      let newContent = ''
+      message.data
+        // .slice()
+        // .reverse()
+        .forEach((data) => {
+          if (data.type == 'log') {
+            if (data.content.values.includes('<pre>')) {
+              newContent += `<div> ${now} : </div> ${data.content.values}` + '<hr>'
+              return
+            } else {
+              newContent += `<div> ${now} : ${data.content.values} </div>` + '<hr>'
+              return
+            }
+          }
+          if (data.type == 'custom') {
+            newContent += `<div> ${now} : ${data.content.values} </div>` + '<hr>'
+            return
+          }
+          if (data.type == 'carbon') {
+            newContent += `<div> ${now} : ${data.content.values} </div>` + '<hr>'
+            return
+          }
+        })
+      if (newContent != '') {
+        document.getElementById('response').innerHTML = oldContent + newContent
+        window.scrollTo(0, document.body.scrollHeight)
+      }
+    }
+  })
+})
