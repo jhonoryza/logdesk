@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
-  "author": "example.com",
+  "author": "jardik.oryza@gmail.com",
   "homepage": "https://www.electronjs.org",
   "scripts": {
     "format": "prettier --write .",
@@ -51,6 +51,7 @@
       ]
     },
     "linux": {
+      "maintainer": "jardik.oryza@gmail.com",
       "target": [
         "deb"
       ]
