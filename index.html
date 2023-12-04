@@ -15,22 +15,23 @@
 
   <body>
     <!-- navigation -->
-    <nav class="grid grid-cols-2 justify-between border border-slate-300 shadow py-2">
+    <nav style="-webkit-app-region: drag" class="sticky top-0 w-full z-30 bg-stone-100 grid grid-cols-2 justify-between shadow-xl py-1 px-2 overflow-hidden">
       <!-- logo -->
-      <h1 class="font-bold text-slate-700">Logdesk</h1>
+      <h1 class="ml-20 text-slate-700">Logdesk</h1>
 
       <!-- toggle switch always on top -->
-      <div class="flex items-center justify-end bg-white">
+      <div class="flex items-center justify-end">
         <div class="flex items-center" x-data="{ on: false }">
           <button
+            style="-webkit-app-region: no-drag"
             type="button"
-            class="bg-gray-200 relative inline-flex h-4 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+            class="bg-neutral-300 relative inline-flex h-4 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out"
             role="switch"
             aria-checked="false"
             x-ref="switch"
             x-state:on="Enabled"
             x-state:off="Not Enabled"
-            :class="{ 'bg-indigo-600': on, 'bg-gray-200': !(on) }"
+            :class="{ 'bg-indigo-500': on, 'bg-neutral-300': !(on) }"
             aria-labelledby="annual-billing-label"
             :aria-checked="on.toString()"
             @click="on = !on; window.electronAPI.toggleTop(on);"
@@ -48,7 +49,7 @@
             id="annual-billing-label"
             @click="on = !on; $refs.switch.focus(); window.electronAPI.toggleTop(on);"
           >
-            <span class="font-medium text-slate-700">Always On Top</span>
+            <span class="text-slate-700">Keep on top</span>
           </span>
         </div>
       </div>
@@ -56,8 +57,8 @@
     </nav>
     <!-- end navigation -->
 
-    <div class="container mx-auto border">
-      <div id="response"></div>
+    <div class="container mx-auto">
+      <div id="response" class="text-xs px-2"></div>
     </div>
 
     <script src="/renderer.js"></script>

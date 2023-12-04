@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, shell, BrowserWindow, ipcMain } = require('electron')
+const { app, shell, BrowserWindow, ipcMain, nativeTheme } = require('electron')
 const path = require('path')
 const { electronApp, optimizer } = require('@electron-toolkit/utils')
 
@@ -35,9 +35,11 @@ expressApp.listen(port, () => {
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 400,
+    height: 400,
     show: false,
+    titleBarStyle: 'hiddenInset',
+    titleBarOverlay: true,
     autoHideMenuBar: true,
     ...(process.platform === 'linux'
       ? {
@@ -53,6 +55,8 @@ function createWindow() {
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
+
+  nativeTheme.themeSource = 'light'
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)

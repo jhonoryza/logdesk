@@ -8,14 +8,14 @@
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --ext .js .",
-    "dev": "electron .",
+    "dev": "yarn run tailwind:build && electron .",
     "postinstall": "electron-builder install-app-deps",
     "build": "electron-builder --win --mac --linux",
     "build:win": "electron-builder --win",
     "build:mac": "electron-builder --mac",
     "build:linux": "electron-builder --linux",
-    "tailwind": "npx tailwindcss -i ./src/tailwind.css -o ./src/public/tailwind.css --watch",
-    "tailwind:build": "npx tailwindcss -i ./src/tailwind.css -o ./src/public/tailwind.css --minify"
+    "tailwind": "npx tailwindcss -i ./tailwind.css -o ./public/tailwind.css --watch",
+    "tailwind:build": "npx tailwindcss -i ./tailwind.css -o ./public/tailwind.css --minify"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",
