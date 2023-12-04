@@ -10,7 +10,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 
 const expressApp = express()
-const port = 3000
+const port = 33555
 
 expressApp.use(bodyParser.json())
 expressApp.use(express.static(__dirname + '/public'))
@@ -61,7 +61,7 @@ function createWindow() {
 
   // and load the index.html of the app.
   // mainWindow.loadFile(path.join(__dirname, 'index.html'))
-  mainWindow.loadURL('http://localhost:3000')
+  mainWindow.loadURL(`http://localhost:${port}`)
   // mainWindow.webContents.openDevTools()
 }
 
