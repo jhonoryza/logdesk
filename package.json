@@ -2,7 +2,7 @@
   "name": "logdesk",
   "version": "1.0.0",
   "description": "A minimal Electron application",
-  "main": "./src/main.js",
+  "main": "main.js",
   "author": "example.com",
   "homepage": "https://www.electronjs.org",
   "scripts": {
@@ -10,29 +10,50 @@
     "lint": "eslint --ext .js .",
     "dev": "electron .",
     "postinstall": "electron-builder install-app-deps",
-    "build:win": "electron-builder --win --config",
-    "build:mac": "electron-builder --mac --config",
-    "build:linux": "electron-builder --linux --config",
+    "build": "electron-builder --win --mac --linux",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
     "tailwind": "npx tailwindcss -i ./src/tailwind.css -o ./src/public/tailwind.css --watch",
     "tailwind:build": "npx tailwindcss -i ./src/tailwind.css -o ./src/public/tailwind.css --minify"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^2.0.0",
-    "@electron-toolkit/utils": "^2.0.0",
+    "@electron-toolkit/utils": "^2.0.1",
     "body-parser": "^1.20.2",
-    "electron-updater": "^6.1.1",
     "express": "^4.18.2"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.1",
     "@electron-toolkit/eslint-config-prettier": "^1.0.1",
-    "@electron/rebuild": "^3.4.0",
     "autoprefixer": "^10.4.16",
-    "electron": "^25.6.0",
-    "electron-builder": "^24.6.3",
-    "eslint": "^8.47.0",
+    "electron": "^27.1.3",
+    "electron-builder": "^24.9.1",
+    "eslint": "^8.55.0",
     "postcss": "^8.4.32",
-    "prettier": "^3.0.2",
+    "prettier": "^3.1.0",
     "tailwindcss": "^3.3.5"
+  },
+  "build": {
+    "appId": "labkita.my.id.logdesk",
+    "productName": "logdesk",
+    "copyright": "Copyright © 2023",
+    "mac": {
+      "type": "distribution",
+      "category": "Utilities",
+      "target": [
+        "zip"
+      ]
+    },
+    "win": {
+      "target": [
+        "zip"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb"
+      ]
+    }
   }
 }

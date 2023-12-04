@@ -5,24 +5,28 @@ A logger desktop app
 ## Install
 
 ```bash
-pnpm install
+npm install -g yarn
+yarn install
 ```
 
 ## Development
 
 ```bash
-pnpm run dev
+yarn run dev
 ```
 
 ## Build
 
 ```bash
 # For windows
-$ pnpm run build:win
+yarn run build:win
 
 # For macOS
-$ pnpm run build:mac
+yarn run build:mac
 
 # For Linux
-$ pnpm run build:linux
+yarn run build:linux
+
+# For ALL
+yarn run build
 ```
