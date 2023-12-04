@@ -2,6 +2,8 @@
 
 A logger desktop app
 
+![image](https://github.com/jhonoryza/logdesk/assets/5910636/d9621642-1a2e-4d90-a6c4-bba2d76daf54)
+
 ## Install
 
 ```bash
