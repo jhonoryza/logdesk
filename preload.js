@@ -29,23 +29,16 @@ window.addEventListener('DOMContentLoaded', () => {
         // .slice()
         // .reverse()
         .forEach((data) => {
-          if (data.type == 'log') {
-            if (data.content.values.includes('<pre>')) {
-              newContent += `<div> ${now} : </div> ${data.content.values}` + '<hr>'
-              return
-            } else {
-              newContent += `<div> ${now} : ${data.content.values} </div>` + '<hr>'
-              return
-            }
-          }
-          if (data.type == 'custom') {
-            newContent += `<div> ${now} : ${data.content.values} </div>` + '<hr>'
-            return
-          }
-          if (data.type == 'carbon') {
-            newContent += `<div> ${now} : ${data.content.values} </div>` + '<hr>'
-            return
-          }
+          newContent += `
+            <div class="w-full p-1 text-left text-sm border border-red-200 grid grid-cols-4">
+                <span class="text-xs text-lime-700 mr-1 border-r border-neutral-400 col-span-1">
+                    ${now}
+                </span>
+                <div class="text-xs col-span-3">
+                    <p class="font-semibold text-orange-500">${data.content.values}</p>
+                </div>
+            </div>
+            `
         })
       if (newContent != '') {
         document.getElementById('response').innerHTML = oldContent + newContent

@@ -12,7 +12,13 @@ const bodyParser = require('body-parser')
 const expressApp = express()
 const port = 33555
 
-expressApp.use(bodyParser.json())
+expressApp.use(
+  bodyParser.json({
+    limit: '512mb',
+    parameterLimit: 2000
+  })
+)
+
 expressApp.use(express.static(__dirname + '/public'))
 
 expressApp.get('/', (req, res) => {
@@ -21,7 +27,8 @@ expressApp.get('/', (req, res) => {
 
 expressApp.post('/api/echo', (req, res) => {
   const receivedData = req.body
-  console.log(receivedData)
+
+  // console.log(receivedData.payloads)
   mainWindow.webContents.send('echo', { data: receivedData.payloads })
 
   res.json({ message: 'OK' })
