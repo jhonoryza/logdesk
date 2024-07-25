@@ -1,5 +1,17 @@
 # logdesk
 
+<p align="center">
+    <a href="https://github.com/jhonoryza/logdesk/releases/latest">
+        <img src="https://poser.pugx.org/jhonoryza/logdesk/d/total.svg" alt="Total Downloads">
+    </a>
+    <a href="https://github.com/jhonoryza/logdesk/releases/latest">
+        <img src="https://poser.pugx.org/jhonoryza/logdesk/v/stable.svg" alt="Latest Stable Version">
+    </a>
+    <a href="https://github.com/jhonoryza/logdesk/blob/main/LICENSE.md">
+        <img src="https://poser.pugx.org/jhonoryza/logdesk/license.svg" alt="License">
+    </a>
+</p>
+
 A logger desktop app
 
 ![image](./logdesk.png)
